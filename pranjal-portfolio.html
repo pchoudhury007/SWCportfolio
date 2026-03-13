@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio — Pranjal Choudhury</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #080a0f;
+    --surface: #0d1117;
+    --card: #111720;
+    --border: rgba(255,255,255,0.07);
+    --accent: #c8f564;
+    --accent2: #64b5f6;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --gold: #e8c97a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(8,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: #080a0f;
+    border: none;
+    padding: 0.5rem 1.4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* TICKER */
+  .ticker-wrap {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    padding: 0.8rem 0;
+    background: var(--surface);
+    margin-top: 64px;
+  }
+  .ticker {
+    display: flex;
+    gap: 4rem;
+    animation: ticker 40s linear infinite;
+    width: max-content;
+  }
+  .ticker-item {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .ticker-item span { color: var(--accent); }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 6rem 4rem 4rem;
+    position: relative;
+    gap: 4rem;
+  }
+  .hero-orb {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,245,100,0.08) 0%, transparent 70%);
+    top: 50%; right: 0;
+    transform: translate(20%,-50%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-tag::before { content:''; display:block; width:32px; height:1px; background:var(--accent); }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem,5.5vw,5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; }
+  .btn-primary {
+    background: var(--accent);
+    color: #080a0f;
+    padding: 0.9rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+  .btn-ghost {
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s;
+  }
+  .btn-ghost:hover { color: var(--text); }
+  .btn-ghost::after { content:'→'; transition: transform 0.2s; }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+
+  /* HERO STATS */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .stat-card {
+    background: var(--card);
+    padding: 1.5rem;
+    transition: background 0.3s;
+  }
+  .stat-card:hover { background: #161e2e; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .hero-photo-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    grid-column: span 2;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .avatar {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: #080a0f;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .avatar-info small {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .avatar-info p {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-label::before { content:'//'; color: var(--muted); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem,4vw,4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  /* ABOUT */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  .about-visual { position: relative; }
+  .about-img-frame {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--card);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-img-frame::after {
+    content:'';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(200,245,100,0.05), transparent 60%);
+  }
+  .about-accent-line {
+    position: absolute;
+    bottom: -1px; left: -1px;
+    width: 40%;
+    height: 4px;
+    background: var(--accent);
+  }
+  .about-badge {
+    position: absolute;
+    bottom: 2rem; right: -2rem;
+    background: var(--accent);
+    color: #080a0f;
+    padding: 1rem 1.5rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .about-content p {
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.9;
+    font-size: 0.8rem;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .skill-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .skill-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* PROJECTS */
+  .projects { border-top: 1px solid var(--border); }
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .filter-tab {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.4rem 0.9rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .filter-tab:hover, .filter-tab.active {
+    background: var(--accent);
+    color: #080a0f;
+    border-color: var(--accent);
+  }
+  .projects-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .project-card {
+    background: var(--card);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 340px;
+    transition: background 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card.reverse { direction: rtl; }
+  .project-card.reverse > * { direction: ltr; }
+  .project-card:hover { background: #131b2a; }
+  .project-screenshot {
+    background: #0a0f18;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+  .project-card.reverse .project-screenshot { border-right: none; border-left: 1px solid var(--border); }
+  .project-screen-inner {
+    width: 85%;
+    height: 75%;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  /* Simulated screens */
+  .screen-pbi {
+    background: #1a1a2e;
+    display: grid;
+    grid-template-rows: 28px 1fr;
+  }
+  .screen-pbi-bar {
+    background: #f2c811;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    gap: 6px;
+  }
+  .screen-pbi-logo { width: 14px; height: 14px; background: #000; border-radius: 2px; }
+  .screen-pbi-nav { display: flex; gap: 6px; margin-left: auto; }
+  .screen-pbi-nav-item { width: 20px; height: 3px; background: rgba(0,0,0,0.3); border-radius: 1px; }
+  .screen-pbi-body { display: grid; grid-template-columns: 40px 1fr; }
+  .screen-pbi-sidebar { background: #16213e; padding: 6px 4px; display: flex; flex-direction: column; gap: 5px; border-right: 1px solid rgba(255,255,255,0.05); }
+  .screen-pbi-sb-item { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+  .screen-pbi-sb-item.active { background: #f2c811; opacity: 0.9; }
+  .screen-pbi-main { padding: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .screen-pbi-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+  .screen-pbi-kpi { background: #16213e; border-radius: 2px; padding: 4px; }
+  .screen-pbi-kpi-val { height: 7px; border-radius: 1px; margin-bottom: 2px; opacity: 0.8; }
+  .screen-pbi-kpi-label { height: 2px; background: rgba(255,255,255,0.1); border-radius: 1px; width: 70%; }
+  .screen-pbi-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; flex: 1; }
+  .screen-pbi-chart { background: #16213e; border-radius: 2px; padding: 5px; display: flex; align-items: flex-end; gap: 2px; }
+  .screen-pbi-bar-item { background: #f2c811; border-radius: 1px 1px 0 0; flex: 1; opacity: 0.7; }
+  .screen-pbi-line { background: #16213e; border-radius: 2px; padding: 5px; position: relative; overflow: hidden; }
+  .screen-pbi-line-path { position: absolute; bottom: 5px; left: 5px; right: 5px; height: 60%; }
+
+  .screen-workflow {
+    background: #f8f9fa;
+    display: grid;
+    grid-template-rows: 24px 1fr;
+  }
+  .screen-wf-bar { background: #0078d4; display: flex; align-items: center; padding: 0 8px; gap: 4px; }
+  .screen-wf-logo { width: 10px; height: 10px; background: white; border-radius: 50%; opacity: 0.9; }
+  .screen-wf-body { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+  .screen-wf-step { background: white; border-radius: 3px; padding: 5px 7px; display: flex; align-items: center; gap: 5px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 3px solid #0078d4; }
+  .screen-wf-step.done { border-left-color: #107c10; }
+  .screen-wf-step.warn { border-left-color: #f2c811; }
+  .screen-wf-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .screen-wf-text { flex: 1; height: 3px; background: #ddd; border-radius: 1px; }
+  .screen-wf-badge { width: 14px; height: 6px; border-radius: 3px; }
+  .screen-wf-arrow { text-align: center; color: #0078d4; font-size: 8px; line-height: 1; }
+
+  .screen-devops {
+    background: #0e1117;
+    display: grid;
+    grid-template-rows: 24px 1fr;
+  }
+  .screen-do-bar { background: #0078d4; display: flex; align-items: center; padding: 0 6px; gap: 3px; }
+  .screen-do-logo { width: 10px; height: 10px; background: white; border-radius: 2px; opacity: 0.9; }
+  .screen-do-body { display: grid; grid-template-columns: 50px 1fr; }
+  .screen-do-sidebar { background: #161b22; border-right: 1px solid rgba(255,255,255,0.05); padding: 6px 4px; display: flex; flex-direction: column; gap: 4px; }
+  .screen-do-sb { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+  .screen-do-sb.active { background: #0078d4; }
+  .screen-do-main { padding: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .screen-do-commit { background: #161b22; border-radius: 2px; padding: 4px 6px; display: flex; align-items: center; gap: 4px; border-left: 2px solid var(--accent); }
+  .screen-do-commit-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .screen-do-commit-text { flex: 1; height: 3px; background: rgba(255,255,255,0.1); border-radius: 1px; }
+  .screen-do-commit-hash { width: 16px; height: 4px; background: rgba(200,245,100,0.3); border-radius: 1px; }
+  .screen-do-pipeline { background: #161b22; border-radius: 2px; padding: 5px; display: flex; align-items: center; gap: 3px; }
+  .screen-do-stage { height: 8px; flex: 1; border-radius: 1px; }
+
+  .screen-databricks {
+    background: #1b1b2f;
+    display: grid;
+    grid-template-rows: 26px 1fr;
+  }
+  .screen-db-bar { background: #ff3621; display: flex; align-items: center; padding: 0 8px; gap: 6px; }
+  .screen-db-logo { width: 14px; height: 10px; background: white; border-radius: 1px; clip-path: polygon(50% 0%,100% 50%,50% 100%,0% 50%); opacity: 0.9; }
+  .screen-db-body { display: grid; grid-template-columns: 48px 1fr; }
+  .screen-db-sidebar { background: #13111f; border-right: 1px solid rgba(255,255,255,0.05); padding: 6px 4px; display: flex; flex-direction: column; gap: 5px; }
+  .screen-db-sb { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+  .screen-db-sb.active { background: #ff3621; opacity: 0.8; }
+  .screen-db-main { padding: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .screen-db-cell { background: rgba(255,255,255,0.04); border-radius: 2px; border-left: 2px solid #ff3621; padding: 4px 6px; }
+  .screen-db-code { height: 3px; background: rgba(255,255,255,0.15); border-radius: 1px; margin-bottom: 2px; }
+  .screen-db-output { height: 6px; background: rgba(200,245,100,0.2); border-radius: 1px; }
+
+  .screen-ai {
+    background: #0d1b2a;
+    display: grid;
+    grid-template-rows: 26px 1fr;
+  }
+  .screen-ai-bar { background: #1565c0; display: flex; align-items: center; padding: 0 8px; gap: 6px; }
+  .screen-ai-logo { font-size: 8px; color: white; font-weight: bold; }
+  .screen-ai-body { padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+  .screen-ai-prompt { background: rgba(255,255,255,0.05); border-radius: 3px; padding: 5px 7px; border: 1px solid rgba(255,255,255,0.08); }
+  .screen-ai-prompt-line { height: 3px; background: rgba(255,255,255,0.15); border-radius: 1px; margin-bottom: 2px; }
+  .screen-ai-response { background: rgba(100,181,246,0.1); border-radius: 3px; padding: 5px 7px; border: 1px solid rgba(100,181,246,0.2); }
+  .screen-ai-response-line { height: 3px; background: rgba(100,181,246,0.3); border-radius: 1px; margin-bottom: 2px; }
+  .screen-ai-badge { display: inline-flex; align-items: center; gap: 3px; background: rgba(200,245,100,0.15); border-radius: 10px; padding: 2px 6px; }
+  .screen-ai-badge-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .screen-ai-badge-text { height: 3px; width: 20px; background: var(--accent); border-radius: 1px; opacity: 0.7; }
+
+  .screen-sap {
+    background: #001234;
+    display: grid;
+    grid-template-rows: 26px 1fr;
+  }
+  .screen-sap-bar { background: #003d8f; display: flex; align-items: center; padding: 0 8px; gap: 6px; }
+  .screen-sap-logo { font-size: 7px; color: white; font-weight: bold; letter-spacing: 1px; }
+  .screen-sap-body { padding: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .screen-sap-table-header { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+  .screen-sap-th { height: 6px; background: #003d8f; border-radius: 1px; opacity: 0.8; }
+  .screen-sap-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+  .screen-sap-td { height: 5px; background: rgba(255,255,255,0.08); border-radius: 1px; }
+  .screen-sap-td.highlight { background: rgba(242,200,17,0.3); }
+
+  .screen-ux {
+    background: #13111c;
+    display: grid;
+    grid-template-rows: 26px 1fr;
+  }
+  .screen-ux-bar { background: #f2c811; display: flex; align-items: center; padding: 0 8px; gap: 4px; }
+  .screen-ux-logo { width: 10px; height: 10px; background: #000; border-radius: 50%; }
+  .screen-ux-body { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+  .screen-ux-header { height: 8px; background: rgba(242,200,17,0.3); border-radius: 2px; width: 50%; }
+  .screen-ux-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; }
+  .screen-ux-card { background: rgba(255,255,255,0.05); border-radius: 3px; padding: 5px; border-top: 2px solid rgba(242,200,17,0.5); }
+  .screen-ux-card-bar { height: 20px; background: rgba(242,200,17,0.15); border-radius: 2px; margin-bottom: 3px; }
+  .screen-ux-card-label { height: 3px; background: rgba(255,255,255,0.1); border-radius: 1px; }
+  .screen-ux-nps { background: rgba(100,181,246,0.1); border-radius: 3px; padding: 5px 8px; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(100,181,246,0.2); }
+  .screen-ux-nps-num { height: 14px; width: 20px; background: var(--accent); border-radius: 2px; opacity: 0.7; }
+  .screen-ux-nps-bar { flex: 1; height: 4px; background: rgba(200,245,100,0.2); border-radius: 2px; }
+
+  .screen-etl {
+    background: #0a1628;
+    display: grid;
+    grid-template-rows: 26px 1fr;
+  }
+  .screen-etl-bar { background: #1976d2; display: flex; align-items: center; padding: 0 8px; gap: 6px; }
+  .screen-etl-logo { font-size: 7px; color: white; font-weight: bold; }
+  .screen-etl-body { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+  .screen-etl-flow { display: flex; align-items: center; gap: 4px; }
+  .screen-etl-node { background: #162540; border-radius: 3px; padding: 4px 6px; display: flex; flex-direction: column; gap: 2px; flex: 1; border: 1px solid rgba(25,118,210,0.4); }
+  .screen-etl-node-icon { height: 8px; background: rgba(25,118,210,0.5); border-radius: 1px; }
+  .screen-etl-node-label { height: 3px; background: rgba(255,255,255,0.1); border-radius: 1px; }
+  .screen-etl-arrow { color: var(--accent); font-size: 8px; flex-shrink: 0; }
+  .screen-etl-status { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+  .screen-etl-stat { background: rgba(255,255,255,0.04); border-radius: 2px; padding: 4px; }
+  .screen-etl-stat-val { height: 8px; background: var(--accent); border-radius: 1px; margin-bottom: 2px; opacity: 0.6; }
+  .screen-etl-stat-label { height: 3px; background: rgba(255,255,255,0.08); border-radius: 1px; }
+
+  /* Project cards */
+  .project-info {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .project-num { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--muted); margin-bottom: 1.2rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+  .project-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(200,245,100,0.3);
+    padding: 0.2rem 0.6rem;
+  }
+  .project-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .project-desc { color: var(--muted); font-size: 0.78rem; line-height: 1.8; margin-bottom: 2rem; }
+  .project-metrics { display: flex; gap: 2rem; margin-bottom: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .metric-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+  .metric-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .project-link:hover { gap: 0.9rem; }
+
+  /* TESTIMONIALS */
+  .testimonials { border-top: 1px solid var(--border); background: var(--surface); }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  .testimonial-card { background: var(--card); padding: 2.5rem; transition: background 0.3s; }
+  .testimonial-card:hover { background: #161e2e; }
+  .quote-mark { font-family: 'Cormorant Garamond',serif; font-size:4rem; color:var(--accent); line-height:0.8; margin-bottom:1rem; opacity:0.6; }
+  .testimonial-text { color:var(--muted); font-size:0.78rem; line-height:1.9; margin-bottom:2rem; font-style:italic; }
+  .testimonial-author { display:flex; align-items:center; gap:1rem; padding-top:1.5rem; border-top:1px solid var(--border); }
+  .author-avatar { width:38px; height:38px; display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:0.8rem; color:#080a0f; flex-shrink:0; }
+  .author-name { font-family:'Syne',sans-serif; font-weight:700; font-size:0.82rem; color:var(--text); }
+  .author-role { font-size:0.65rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
+  .stars { font-size:0.75rem; color:var(--gold); margin-bottom:1rem; letter-spacing:2px; }
+
+  /* CONTACT */
+  .contact { border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; }
+  .contact-left p { color:var(--muted); font-size:0.82rem; line-height:1.8; margin-top:1.5rem; margin-bottom:2.5rem; }
+  .contact-info { display:flex; flex-direction:column; gap:1rem; }
+  .contact-item { display:flex; align-items:center; gap:1rem; padding:1rem; border:1px solid var(--border); color:var(--muted); font-size:0.78rem; transition:border-color 0.3s,color 0.3s; }
+  .contact-item:hover { border-color:var(--accent); color:var(--text); }
+  .contact-icon { width:32px; height:32px; background:rgba(200,245,100,0.1); display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
+  .contact-form { display:flex; flex-direction:column; gap:1rem; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .form-field { display:flex; flex-direction:column; gap:0.4rem; }
+  .form-field label { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); }
+  .form-field input, .form-field textarea, .form-field select {
+    background:var(--card); border:1px solid var(--border); color:var(--text);
+    padding:0.75rem 1rem; font-family:'DM Mono',monospace; font-size:0.8rem;
+    outline:none; transition:border-color 0.3s; resize:none; appearance:none;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color:var(--accent); }
+  .form-field textarea { min-height:100px; }
+  .form-submit {
+    background:var(--accent); color:#080a0f; border:none;
+    padding:1rem 2rem; font-family:'DM Mono',monospace; font-size:0.78rem;
+    font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    gap:0.75rem; transition:opacity 0.2s,transform 0.2s; align-self:flex-start;
+  }
+  .form-submit:hover { opacity:0.85; transform:translateY(-2px); }
+
+  /* FOOTER */
+  footer { border-top:1px solid var(--border); padding:2rem 4rem; display:flex; justify-content:space-between; align-items:center; }
+  footer p { font-size:0.7rem; color:var(--muted); letter-spacing:0.1em; }
+  .footer-links { display:flex; gap:2rem; }
+  .footer-links a { font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.3s; }
+  .footer-links a:hover { color:var(--accent); }
+
+  /* SCROLL ANIMATIONS */
+  .fade-in { opacity:0; transform:translateY(24px); transition:opacity 0.7s ease,transform 0.7s ease; }
+  .fade-in.visible { opacity:1; transform:none; }
+
+  /* MODAL */
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:500; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+  .modal-overlay.open { opacity:1; pointer-events:all; }
+  .modal { background:var(--card); border:1px solid var(--border); max-width:680px; width:90%; max-height:82vh; overflow-y:auto; padding:3rem; transform:translateY(20px); transition:transform 0.3s; position:relative; }
+  .modal-overlay.open .modal { transform:none; }
+  .modal-close { position:absolute; top:1.5rem; right:1.5rem; background:transparent; border:1px solid var(--border); color:var(--muted); width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem; transition:border-color 0.2s,color 0.2s; }
+  .modal-close:hover { border-color:var(--accent); color:var(--accent); }
+  .modal-tech { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+  .tech-pill { background:rgba(200,245,100,0.1); color:var(--accent); border:1px solid rgba(200,245,100,0.2); padding:0.3rem 0.8rem; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; }
+
+  /* RESPONSIVE */
+  @media (max-width:900px) {
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; }
+    .hero, .about, .contact { grid-template-columns:1fr; gap:3rem; padding:5rem 1.5rem 3rem; }
+    .hero { min-height:auto; }
+    section { padding:4rem 1.5rem; }
+    .projects-header { flex-direction:column; align-items:flex-start; }
+    .project-card { grid-template-columns:1fr; min-height:auto; }
+    .project-card.reverse { direction:ltr; }
+    .project-screenshot { min-height:240px; }
+    .testimonials-grid { grid-template-columns:1fr; }
+    footer { flex-direction:column; gap:1rem; text-align:center; padding:2rem 1.5rem; }
+    .hero-stats { grid-template-columns:1fr 1fr; }
+    .hero-photo-card { grid-column:span 2; }
+    .about-badge { right:0; }
+    .skills-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">PC.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#testimonials">Stakeholders</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="sip:7f7@sydneywater.com.au" class="nav-cta">Connect</a>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item">120+ Reports Automated <span>✦</span></div>
+    <div class="ticker-item">2,500+ Hours Saved Yearly <span>✦</span></div>
+    <div class="ticker-item">$1M+ Cost Impact <span>✦</span></div>
+    <div class="ticker-item">250+ Suppliers Analysed <span>✦</span></div>
+    <div class="ticker-item">60+ Contracts Digitised <span>✦</span></div>
+    <div class="ticker-item">40%+ Adoption Increase <span>✦</span></div>
+    <div class="ticker-item">60% Power BI Model Optimisation <span>✦</span></div>
+    <div class="ticker-item">38% Fewer Data Defects <span>✦</span></div>
+    <div class="ticker-item">Real‑Time AI Insights <span>✦</span></div>
+    <div class="ticker-item">EDP + SAP + Power BI Expert <span>✦</span></div>
+    <div class="ticker-item">6+ Years Analytics Experience <span>✦</span></div>
+    <div class="ticker-item">5+ Years Oil &amp; Gas Project Experience <span>✦</span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item">120+ Reports Automated <span>✦</span></div>
+    <div class="ticker-item">2,500+ Hours Saved Yearly <span>✦</span></div>
+    <div class="ticker-item">$1M+ Cost Impact <span>✦</span></div>
+    <div class="ticker-item">250+ Suppliers Analysed <span>✦</span></div>
+    <div class="ticker-item">60+ Contracts Digitised <span>✦</span></div>
+    <div class="ticker-item">40%+ Adoption Increase <span>✦</span></div>
+    <div class="ticker-item">60% Power BI Model Optimisation <span>✦</span></div>
+    <div class="ticker-item">38% Fewer Data Defects <span>✦</span></div>
+    <div class="ticker-item">Real‑Time AI Insights <span>✦</span></div>
+    <div class="ticker-item">EDP + SAP + Power BI Expert <span>✦</span></div>
+    <div class="ticker-item">6+ Years Analytics Experience <span>✦</span></div>
+    <div class="ticker-item">5+ Years Oil &amp; Gas Project Experience <span>✦</span></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-orb"></div>
+  <div>
+    <div class="hero-tag">Data Analytics and AI Implementation Visionary</div>
+    <h1>Pranjal<br><em>Choudhury</em><br>Portfolio</h1>
+    <p class="hero-sub">I help businesses to build and expand capability with the power of Data.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-ghost">Start a conversation</a>
+    </div>
+  </div>
+  <div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">120+</div>
+        <div class="stat-label">Reports Automated</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2,500+</div>
+        <div class="stat-label">Hours Saved Yearly</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$1M+</div>
+        <div class="stat-label">Cost Impact</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">250+</div>
+        <div class="stat-label">Suppliers Analysed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">60%</div>
+        <div class="stat-label">Power BI Model Optimisation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">AI</div>
+        <div class="stat-label">Real‑Time AI Insights</div>
+      </div>
+      <div class="hero-photo-card" style="grid-column:span 2;">
+        <div class="avatar">PC</div>
+        <div class="avatar-info">
+          <p>Pranjal Choudhury</p>
+          <small>BI Reporting Analyst · Sydney Water Corporation</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual fade-in">
+    <div class="about-img-frame">
+      <svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:80%">
+        <circle cx="100" cy="60" r="40" fill="rgba(200,245,100,0.08)" stroke="rgba(200,245,100,0.2)" stroke-width="1"/>
+        <circle cx="100" cy="58" r="26" fill="rgba(200,245,100,0.15)"/>
+        <ellipse cx="100" cy="160" rx="60" ry="70" fill="rgba(200,245,100,0.06)" stroke="rgba(200,245,100,0.15)" stroke-width="1"/>
+        <path d="M72 105 Q100 120 128 105 L140 200 Q100 215 60 200 Z" fill="rgba(200,245,100,0.08)"/>
+        <text x="100" y="63" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="24" fill="rgba(200,245,100,0.4)" font-weight="300">PC</text>
+        <line x1="20" y1="180" x2="80" y2="180" stroke="rgba(200,245,100,0.15)" stroke-width="0.5"/>
+        <line x1="120" y1="180" x2="180" y2="180" stroke="rgba(200,245,100,0.15)" stroke-width="0.5"/>
+      </svg>
+      <div class="about-accent-line"></div>
+    </div>
+    <div class="about-badge">11+ YRS EXP.</div>
+  </div>
+  <div class="about-content fade-in">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Architect of<br><em>Digital Enablement</em></h2>
+    <p>Experienced BI Developer with 11 years of expertise delivering enterprise reporting solutions and driving digital transformation across the oil &amp; gas and utilities sectors. Highly proficient in the Microsoft Power Platform, with recent focus on strengthening Sydney Water's procurement and supply chain operations through digital enablement using Power Apps, Power Automate, Power BI, Dataflows, Databricks, and AI-driven initiatives.</p>
+    <p>Strong background in implementing Data Governance within the Power BI ecosystem, including Azure DevOps version control, PowerBI data catalogue tool, and data model analysis — enabling timely, high‑quality report delivery to over 650 stakeholders. Adept at strategic and project stakeholder management, ensuring reporting alignment across business units, facilitating clear communication, and influencing decisions to support enterprise‑wide procurement reporting strategies.</p>
+    <div class="skills-grid">
+      <div class="skill-item"><div class="skill-dot"></div>Microsoft Certified: Implementing Analytics using Fabric (DP-600)</div>
+      <div class="skill-item"><div class="skill-dot"></div>Oracle Cloud Infrastructure 2025 Certified AI Professional</div>
+      <div class="skill-item"><div class="skill-dot"></div>Databricks Accreditation: Generative AI Fundamentals</div>
+      <div class="skill-item"><div class="skill-dot"></div>Certified FME Professional (Spatial ETL Tool)</div>
+      <div class="skill-item"><div class="skill-dot"></div>Certified ISO 9001 Lead Auditor (Bureau Veritas)</div>
+      <div class="skill-item"><div class="skill-dot"></div>Certification in Project Management (i2P2M)</div>
+      <div class="skill-item"><div class="skill-dot"></div>Microsoft Data Analytics Stack</div>
+      <div class="skill-item"><div class="skill-dot"></div>Power BI · Databricks Dashboard · EDP + SAP Expert</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="projects-header">
+    <div>
+      <div class="section-label">Work</div>
+      <h2 class="section-title">SWC Featured<br><em>Projects</em></h2>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterProjects('all',this)">All</button>
+      <button class="filter-tab" onclick="filterProjects('modelling',this)">Data Modelling &amp; Engineering</button>
+      <button class="filter-tab" onclick="filterProjects('reporting',this)">Reporting Automation</button>
+      <button class="filter-tab" onclick="filterProjects('governance',this)">Governance &amp; Standards</button>
+      <button class="filter-tab" onclick="filterProjects('workflow',this)">Workflow Digitisation</button>
+      <button class="filter-tab" onclick="filterProjects('ai',this)">AI &amp; Advanced Analytics</button>
+    </div>
+  </div>
+
+  <div class="projects-grid" id="projectsGrid">
+
+    <!-- P1: Major Projects Panel Contracts -->
+    <div class="project-card fade-in" data-category="modelling" onclick="openModal('p1')">
+      <div class="project-screenshot">
+        <div class="project-screen-inner">
+          <div class="screen-databricks">
+            <div class="screen-db-bar">
+              <div class="screen-db-logo"></div>
+              <div style="height:4px;width:30px;background:rgba(255,255,255,0.3);border-radius:2px;margin-left:4px;"></div>
+            </div>
+            <div class="screen-db-body">
+              <div class="screen-db-sidebar">
+                <div class="screen-db-sb active"></div>
+                <div class="screen-db-sb"></div>
+                <div class="screen-db-sb"></div>
+                <div class="screen-db-sb"></div>
+              </div>
+              <div class="screen-db-main">
+                <div class="screen-db-cell"><div class="screen-db-code" style="width:80%"></div><div class="screen-db-code" style="width:60%"></div><div class="screen-db-output"></div></div>
+                <div class="screen-db-cell"><div class="screen-db-code" style="width:90%"></div><div class="screen-db-output" style="background:rgba(100,181,246,0.2)"></div></div>
+                <div class="screen-db-cell"><div class="screen-db-code" style="width:70%"></div><div class="screen-db-output" style="background:rgba(242,200,17,0.2)"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-num">01 / 09</div>
+        <div class="project-tags"><span class="project-tag">Data Modelling</span><span class="project-tag">SAP</span><span class="project-tag">Power BI</span></div>
+        <h3 class="project-title">Major Projects Panel Contracts Reporting</h3>
+        <p class="project-desc">A self‑serve reporting capability for Major Projects, built by modelling critical SCM (SAP BW) and Projects datasets in EDP (Databricks) and integrating SAP Ariba contract data. Standardised SQL/curated views power unified Power BI dashboards surfacing panel contractual compliance and supplier governance.</p>
+        <div class="project-metrics">
+          <div><div class="metric-val">On‑Demand</div><div class="metric-label">Compliance Visibility</div></div>
+          <div><div class="metric-val">End‑to‑End</div><div class="metric-label">Governed Data Model</div></div>
+        </div>
+        <a href="#" class="project-link" onclick="event.preventDefault()">View Case Study</a>
+      </div>
+    </div>
+
+    <!-- P2: PCM KRA Scorecard -->
+    <div class="project-card reverse fade-in" data-category="reporting" onclick="openModal('p2')">
+      <div class="project-screenshot">
+        <div class="project-screen-inner">
+          <div class="screen-pbi">
+            <div class="screen-pbi-bar">
+              <div class="screen-pbi-logo"></div>
+              <div class="screen-pbi-nav"><div class="screen-pbi-nav-item"></div><div class="screen-pbi-nav-item"></div><div class="screen-pbi-nav-item"></div></div>
+            </div>
+            <div class="screen-pbi-body">
+              <div class="screen-pbi-sidebar">
+                <div class="screen-pbi-sb-item active"></div>
+                <div class="screen-pbi-sb-item"></div>
+                <div class="screen-pbi-sb-item"></div>
+              </div>
+              <div class="screen-pbi-main">
+                <div class="screen-pbi-kpis">
+                  <div class="screen-pbi-kpi"><div class="screen-pbi-kpi-val" style="background:#f2c811"></div><div class="screen-pbi-kpi-label"></div></div>
+                  <div class="screen-pbi-kpi"><div class="screen-pbi-kpi-val" style="background:var(--accent)"></div><div class="screen-pbi-kpi-label"></div></div>
+                  <div class="screen-pbi-kpi"><div class="screen-pbi-kpi-val" style="background:var(--accent2)"></div><div class="screen-pbi-kpi-label"></div></div>
+                  <div class="screen-pbi-kpi"><div class="screen-pbi-kpi-val" style="background:#f06292"></div><div class="screen-pbi-kpi-label"></div></div>
+                </div>
+                <div class="screen-pbi-charts">
+                  <div class="screen-pbi-chart">
+                    <div class="screen-pbi-bar-item" style="height:55%"></div>
+                    <div class="screen-pbi-bar-item" style="height:80%"></div>
+                    <div class="screen-pbi-bar-item" style="height:65%"></div>
+                    <div class="screen-pbi-bar-item" style="height:90%"></div>
+                    <div class="screen-pbi-bar-item" style="height:70%"></div>
+                  </div>
+                  <div class="screen-pbi-chart" style="background:#16213e;border-radius:2px;padding:5px;position:relative;overflow:hidden;">
+                    <svg style="position:absolute;inset:4px" viewBox="0 0 80 40" preserveAspectRatio="none">
+                      <polyline points="0,35 15,25 30,30 45,15 60,20 80,8" fill="none" stroke="#f2c811" stroke-width="2" opacity="0.8"/>
+                      <polyline points="0,40 80,40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-num">02 / 09</div>
+        <div class="project-tags"><span class="project-tag">Reporting Automation</span><span class="project-tag">DAX</span><span class="project-tag">Power Automate</span></div>
+        <h3 class="project-title">EPCM KRA Scorecard Automation — USCN</h3>
+        <p class="project-desc">Automated enterprise reporting solution replacing the manual EPCM KRA Scorecard process for the Upper South Creek Program (Tranche‑1). Consolidates monthly KRA/KPI submissions from the EPCM contractor and SMEs, processes them through curated dataflows, and calculates KRAs dynamically using DAX.</p>
+        <div class="project-metrics">
+          <div><div class="metric-val">Zero</div><div class="metric-label">Manual Compilation</div></div>
+          <div><div class="metric-val">Month‑End</div><div class="metric-label">Consistency Achieved</div></div>
+        </div>
+        <a href="#" class="project-link" onclick="event.preventDefault()">View Case Study</a>
+      </div>
+    </div>
+
+    <!-- P3: Panel Contracts Performance -->
+    <div class="project-card fade-in" data-category="reporting" onclick="openModal('p3')">
+      <div class="project-screenshot">
+        <div class="project-screen-inner">
+          <div class="screen-sap">
+            <div class="screen-sap-bar">
+              <div class="screen-sap-logo">SAP</div>
+            </div>
+            <div class="screen-sap-body">
+              <div class="screen-sap-table-header">
+                <div class="screen-sap-th"></div><div class="screen-sap-th"></div><div class="screen-sap-th"></div><div class="screen-sap-th"></div>
+              </div>
+              <div class="screen-sap-row"><div class="screen-sap-td highlight"></div><div class="screen-sap-td"></div><div class="screen-sap-td"></div><div class="screen-sap-td highlight"></div></div>
+              <div class="screen-sap-row"><div class="screen-sap-td"></div><div class="screen-sap-td highlight"></div><div class="screen-sap-td"></div><div class="screen-sap-td"></div></div>
+              <div class="screen-sap-row"><div class="screen-sap-td highlight"></div><div class="screen-sap-td"></div><div class="screen-sap-td highlight"></div><div class="screen-sap-td"></div></div>
+              <div class="screen-sap-row"><div class="screen-sap-td"></div><div class="screen-sap-td"></div><div class="screen-sap-td highlight"></div><div class="screen-sap-td highlight"></div></div>
+              <div class="screen-sap-row"><div class="screen-sap-td highlight"></div><div class="screen-sap-td highlight"></div><div class="screen-sap-td"></div><div class="screen-sap-td"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-num">03 / 09</div>
+        <div class="project-tags"><span class="project-tag">Reporting Automation</span><span class="project-tag">EDP</span><span class="project-tag">SAP Ariba</span></div>
+        <h3 class="project-title">Panel Contracts Performance Automation</h3>
+        <p class="project-desc">Centralised performance reporting system across ~60 panel contracts and 250+ suppliers using EDP (Databricks), SAP BW/BICC, and SAP Ariba data. Time‑intelligence functions surface trends, exceptions, and utilisation insights across all business units.</p>
+        <div class="project-metrics">
+          <div><div class="metric-val">2,500+</div><div class="metric-label">Hours Saved p.a.</div></div>
+          <div><div class="metric-val">250+</div><div class="metric-label">Suppliers Monitored</div></div>
+        </div>
+        <a href="#" class="project-link" onclick="event.preventDefault()">View Case Study</a>
+      </div>
+    </div>
+
+    <!-- P4: Data Governance Framework -->
+    <div class="project-card reverse fade-in" data-category="governance" onclick="openModal('p4')">
+      <div class="project-screenshot">
+        <div class="project-screen-inner">
+          <div class="screen-devops">
+            <div class="screen-do-bar">
+              <div class="screen-do-logo"></div>
+              <div style="height:4px;width:40px;background:rgba(255,255,255,0.3);border-radius:2px;margin-left:6px;"></div>
+            </div>
+            <div class="screen-do-body">
+              <div class="screen-do-sidebar">
+                <div class="screen-do-sb active"></div>
+                <div class="screen-do-sb"></div>
+                <div class="screen-do-sb"></div>
+                <div class="screen-do-sb"></div>
+              </div>
+              <div class="screen-do-main">
+                <div class="screen-do-commit"><div class="screen-do-commit-dot"></div><div class="screen-do-commit-text"></div><div class="screen-do-commit-hash"></div></div>
+                <div class="screen-do-commit" style="border-left-color:var(--accent2)"><div class="screen-do-commit-dot" style="background:var(--accent2)"></div><div class="screen-do-commit-text"></div><div class="screen-do-commit-hash" style="background:rgba(100,181,246,0.3)"></div></div>
+                <div class="screen-do-commit"><div class="screen-do-commit-dot"></div><div class="screen-do-commit-text"></div><div class="screen-do-commit-hash"></div></div>
+                <div class="screen-do-pipeline">
+                  <div class="screen-do-stage" style="background:#107c10;opacity:0.7"></div>
+                  <div class="screen-do-stage" style="background:#107c10;opacity:0.7"></div>
+                  <div class="screen-do-stage" style="background:#f2c811;opacity:0.7"></div>
+                  <div class="screen-do-stage" style="background:rgba(255,255,255,0.1)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-num">04 / 09</div>
+        <div class="project-tags"><span class="project-tag">Governance</span><span class="project-tag">Azure DevOps</span><span class="project-tag">Power BI</span></div>
+        <h3 class="project-title">Procurement Analytics Data Governance Framework</h3>
+        <p class="project-desc">Modern governance framework for the Procurement Analytics reporting architecture using Azure DevOps version control, PBIX peer review workflows, and automated PBIR metadata extraction. Introduced procurement data dictionary and standardised model structures.</p>
+        <div class="project-metrics">
+          <div><div class="metric-val">60%</div><div class="metric-label">Unused Columns Reduced</div></div>
+          <div><div class="metric-val">Zero</div><div class="metric-label">Downtime from Deprecated Fields</div></div>
+        </div>
+        <a href="#" class="project-link" onclick="event.preventDefault()">View Case Study</a>
+      </div>
+    </div>
+
+    <!-- P5: SAP Dataset Enablement -->
+    <div class="project-card fade-in" data-category="modelling" onclick="openModal('p5')">
+      <div class="project-screenshot">
+        <div class="project-screen-inner">
+          <div class="screen-etl">
+            <div class="screen-etl-bar">
+              <div class="screen-etl-logo">EDP</div>
+            </div>
+            <div class="screen-etl-body">
+              <div class="screen-etl-flow">
+                <div class="screen-etl-node"><div class="screen-etl-node-icon" style="background:rgba(0,61,143,0.8)"></div><div class="screen-etl-node-label"></div></div>
+                <div class="screen-etl-arrow">→</div>
+                <div class="screen-etl-node"><div class="screen-etl-node-icon" style="background:rgba(255,54,33,0.5)"></div><div class="screen-etl-node-label"></div></div>
+                <div class="screen-etl-arrow">→</div>
+                <div class="screen-etl-node"><div class="screen-etl-node-icon" style="background:rgba(242,200,17,0.5)"></div><div class="screen-etl-node-label"></div></div>
+              </div>
+              <div class="screen-etl-status">
+                <div class="screen-etl-stat"><div class="screen-etl-stat-val"></div><div class="screen-etl-stat-label"></div></div>
+                <div class="screen-etl-stat"><div class="screen-etl-stat-val" style="background:var(--accent2);opacity:0.5"></div><div class="screen-etl-stat-label"></div></div>
+                <div class="screen-etl-stat"><div class="screen-etl-stat-val" style="background:var(--gold);opacity:0.5"></div><div class="screen-etl-stat-label"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-num">05 / 09</div>
+        <div class="project-tags"><span class="project-tag">Data Modelling</span><span class="project-tag">SAP BW</span><span class="project-tag">Signavio</span></div>
+        <h3 class="project-title">SAP Dataset Enablement &amp; Modelling Alignment</h3>
+        <p class="project-desc">Cross‑functional workshop initiative involving SW Digital (EDP), SAP BW consultants, and Signavio teams to identify and align critical SAP datasets (Service Entry Sheets, PR/PO, VIM) with SAP business logic. Accelerated EDP table release and improved end‑to‑end data reliability.</p>
+        <div class="project-metrics">
+          <div><div class="metric-val">Zero</div><div class="metric-label">Refresh Failures</div></div>
+          <div><div class="metric-val">Faster</div><div class="metric-label">EDP Dataset Availability</div></div>
+        </div>
+        <a href="#" class="project-link" onclick="event.preventDefault()">View Case Study</a>
+      </div>
+    </div>
+
+    <!-- P6: Deviation Workflow -->
+    <div class="project-card reverse fade-in" data-category="workflow" onclick="openModal('p6')">
+      <div class="project-screenshot">
+        <div class="project-screen-inner">
+          <div class="screen-workflow">
+            <div class="screen-wf-bar">
+              <div class="screen-wf-logo"></div>
+              <div style="height:3px;width:30px;background:rgba(255,255,255,0.4);border-radius:2px;margin-left:4px;"></div>
+            </div>
+            <div class="screen-wf-body">
+              <div class="screen-wf-step done"><div class="screen-wf-dot" style="background:#107c10"></div><div class="screen-wf-text"></div><div class="screen-wf-badge" style="background:rgba(16,124,16,0.2)"></div></div>
+              <div class="screen-wf-arrow">↓</div>
+              <div class="screen-wf-step done"><div class="screen-wf-dot" style="background:#107c10"></div><div class="screen-wf-text"></div><div class="screen-wf-badge" style="background:rgba(16,124,16,0.2)"></div></div>
+              <div class="screen-wf-arrow">↓</div>
+              <div class="screen-wf-step warn"><div class="screen-wf-dot" style="background:#f2c811"></div><div class="screen-wf-text"></div><div class="screen-wf-badge" style="background:rgba(242,200,17,0.2)"></div></div>
+              <div class="screen-wf-arrow">↓</div>
+              <div class="screen-wf-step"><div class="screen-wf-dot" style="background:#0078d4"></div><div class="screen-wf-text"></div><div class="screen-wf-badge" style="background:rgba(0,120,212,0.2)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-num">06 / 09</div>
+        <div class="project-tags"><span class="project-tag">Workflow Digitisation</span><span class="project-tag">Power Apps</span><span class="project-tag">Power Automate</span></div>
+        <h3 class="project-title">Deviation from Standards Workflow — Shared Purchasing Contracts</h3>
+        <p class="project-desc">End‑to‑end digital approval workflow for Shared Purchasing Contracts, integrating the ID Collaboration SharePoint site with a custom Power Apps solution accessible to external delivery partners (RDP). Multi‑stage approvals orchestrated via Power Automate.</p>
+        <div class="project-metrics">
+          <div><div class="metric-val">24→15</div><div class="metric-label">Days Turnaround</div></div>
+          <div><div class="metric-val">Full</div><div class="metric-label">Audit Trail</div></div>
+        </div>
+        <a href="#" class="project-link" onclick="event.preventDefault()">View Case Study</a>
+      </div>
+    </div>
+
+    <!-- P7: Power BI UX Standardisation -->
+    <div class="project-card fade-in" data-category="governance" onclick="openModal('p7')">
+      <div class="project-screenshot">
+        <div class="project-screen-inner">
+          <div class="screen-ux">
+            <div class="screen-ux-bar">
+              <div class="screen-ux-logo"></div>
+              <div style="height:3px;width:30px;background:rgba(0,0,0,0.2);border-radius:2px;margin-left:4px;"></div>
+            </div>
+            <div class="screen-ux-body">
+              <div class="screen-ux-header"></div>
+              <div class="screen-ux-cards">
+                <div class="screen-ux-card"><div class="screen-ux-card-bar"></div><div class="screen-ux-card-label"></div></div>
+                <div class="screen-ux-card"><div class="screen-ux-card-bar" style="background:rgba(100,181,246,0.2)"></div><div class="screen-ux-card-label"></div></div>
+                <div class="screen-ux-card"><div class="screen-ux-card-bar" style="background:rgba(200,245,100,0.15)"></div><div class="screen-ux-card-label"></div></div>
+              </div>
+              <div class="screen-ux-nps">
+                <div class="screen-ux-nps-num"></div>
+                <div class="screen-ux-nps-bar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-num">07 / 09</div>
+        <div class="project-tags"><span class="project-tag">Governance</span><span class="project-tag">UX</span><span class="project-tag">Adoption</span></div>
+        <h3 class="project-title">Power BI UX Standardisation &amp; Adoption Improvement</h3>
+        <p class="project-desc">Design‑led uplift of procurement reporting introducing standardised UX patterns, JSON themes, a reusable template, and automated usage analytics. Adoption and feedback measured using an annual NPS survey, with usage metrics exported automatically via Power Automate.</p>
+        <div class="project-metrics">
+          <div><div class="metric-val">40%+</div><div class="metric-label">Adoption Increase</div></div>
+          <div><div class="metric-val">NPS</div><div class="metric-label">Feedback Driven</div></div>
+        </div>
+        <a href="#" class="project-link" onclick="event.preventDefault()">View Case Study</a>
+      </div>
+    </div>
+
+    <!-- P8: AI Narrative Generation -->
+    <div class="project-card reverse fade-in" data-category="ai" onclick="openModal('p8')">
+      <div class="project-screenshot">
+        <div class="project-screen-inner">
+          <div class="screen-ai">
+            <div class="screen-ai-bar">
+              <div class="screen-ai-logo">AI Hub</div>
+            </div>
+            <div class="screen-ai-body">
+              <div class="screen-ai-prompt">
+                <div class="screen-ai-prompt-line" style="width:90%"></div>
+                <div class="screen-ai-prompt-line" style="width:70%"></div>
+                <div class="screen-ai-prompt-line" style="width:80%"></div>
+              </div>
+              <div class="screen-ai-badge">
+                <div class="screen-ai-badge-dot"></div>
+                <div class="screen-ai-badge-text"></div>
+              </div>
+              <div class="screen-ai-response">
+                <div class="screen-ai-response-line" style="width:100%"></div>
+                <div class="screen-ai-response-line" style="width:85%"></div>
+                <div class="screen-ai-response-line" style="width:90%"></div>
+                <div class="screen-ai-response-line" style="width:70%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-num">08 / 09</div>
+        <div class="project-tags"><span class="project-tag">AI &amp; Advanced Analytics</span><span class="project-tag">Power Automate</span><span class="project-tag">AI Hub</span></div>
+        <h3 class="project-title">AI‑Powered Narrative Generation for KPI Summary</h3>
+        <p class="project-desc">AI‑driven reporting prototype allowing users to send selected KPIs from Power BI to a programmable AI prompt via Power Automate (AI Hub). Returns executive‑style narrative rendered inside MS Teams and in‑report components, accelerating decision cycles.</p>
+        <div class="project-metrics">
+          <div><div class="metric-val">Real‑Time</div><div class="metric-label">AI Narratives</div></div>
+          <div><div class="metric-val">Reduced</div><div class="metric-label">Analyst Workload</div></div>
+        </div>
+        <a href="#" class="project-link" onclick="event.preventDefault()">View Case Study</a>
+      </div>
+    </div>
+
+    <!-- P9: ATO & GIPA Data Integration -->
+    <div class="project-card fade-in" data-category="ai" onclick="openModal('p9')">
+      <div class="project-screenshot">
+        <div class="project-screen-inner">
+          <div class="screen-pbi">
+            <div class="screen-pbi-bar">
+              <div class="screen-pbi-logo"></div>
+              <div class="screen-pbi-nav"><div class="screen-pbi-nav-item"></div><div class="screen-pbi-nav-item"></div></div>
+            </div>
+            <div class="screen-pbi-body">
+              <div class="screen-pbi-sidebar">
+                <div class="screen-pbi-sb-item"></div>
+                <div class="screen-pbi-sb-item active"></div>
+                <div class="screen-pbi-sb-item"></div>
+              </div>
+              <div class="screen-pbi-main">
+                <div class="screen-pbi-kpis">
+                  <div class="screen-pbi-kpi"><div class="screen-pbi-kpi-val" style="background:var(--accent2)"></div><div class="screen-pbi-kpi-label"></div></div>
+                  <div class="screen-pbi-kpi"><div class="screen-pbi-kpi-val" style="background:var(--accent)"></div><div class="screen-pbi-kpi-label"></div></div>
+                  <div class="screen-pbi-kpi"><div class="screen-pbi-kpi-val" style="background:var(--gold)"></div><div class="screen-pbi-kpi-label"></div></div>
+                  <div class="screen-pbi-kpi"><div class="screen-pbi-kpi-val" style="background:#f06292"></div><div class="screen-pbi-kpi-label"></div></div>
+                </div>
+                <div class="screen-pbi-charts">
+                  <div class="screen-pbi-chart">
+                    <div class="screen-pbi-bar-item" style="height:40%;background:var(--accent2)"></div>
+                    <div class="screen-pbi-bar-item" style="height:70%;background:var(--accent2)"></div>
+                    <div class="screen-pbi-bar-item" style="height:55%;background:var(--accent2)"></div>
+                    <div class="screen-pbi-bar-item" style="height:85%;background:var(--accent2)"></div>
+                    <div class="screen-pbi-bar-item" style="height:65%;background:var(--accent2)"></div>
+                  </div>
+                  <div style="background:#16213e;border-radius:2px;padding:5px;position:relative;overflow:hidden;">
+                    <svg style="position:absolute;inset:4px" viewBox="0 0 80 40" preserveAspectRatio="none">
+                      <polyline points="0,35 20,20 40,28 60,10 80,15" fill="none" stroke="#64b5f6" stroke-width="2" opacity="0.8"/>
+                      <polyline points="0,40 80,40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-num">09 / 09</div>
+        <div class="project-tags"><span class="project-tag">AI &amp; Advanced Analytics</span><span class="project-tag">Dataflows</span><span class="project-tag">Copilot</span></div>
+        <h3 class="project-title">ATO &amp; GIPA Data Integration (Copilot‑Assisted Ingestion)</h3>
+        <p class="project-desc">Curated, refreshable data ingestion pipeline built using Power BI Dataflows and Copilot‑assisted SQL/ETL ("vibe coding"). Integrates ATO Supplier data and Sydney Water GIPA contract information into the procurement analytics model with daily‑refresh capability.</p>
+        <div class="project-metrics">
+          <div><div class="metric-val">Daily</div><div class="metric-label">Auto‑Refreshed Data</div></div>
+          <div><div class="metric-val">Zero</div><div class="metric-label">External Dependencies</div></div>
+        </div>
+        <a href="#" class="project-link" onclick="event.preventDefault()">View Case Study</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-label">Stakeholder Impressions</div>
+  <h2 class="section-title">What Stakeholders<br><em>Say</em></h2>
+  <div class="testimonials-grid">
+
+    <div class="testimonial-card fade-in">
+      <div class="stars">★★★★★</div>
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">Pranjal has been instrumental in enhancing the POT dashboard by incorporating Infrastructure Delivery data and even bringing his own innovative ideas to improve its functionality. His proactive approach and creativity have made a real difference. His assistance with Outlook rules has given the CMSS team better mailbox management and visibility. What truly stands out is Pranjal's positivity — he always approaches challenges with a smile and a can‑do attitude, creating a collaborative and uplifting environment for the team.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:var(--accent);">WF</div>
+        <div>
+          <div class="author-name">Wafa Farhat</div>
+          <div class="author-role">Team Mgr, Procurement · Stand Up and Contribute · Dec 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card fade-in">
+      <div class="stars">★★★★★</div>
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">Pranjal has been a pleasure to work with. He proactively engaged with me to understand the task requirements and collaborated effectively to ensure timely completion. He is very approachable and his willingness to assist made the process smooth and efficient. I truly appreciated his responsiveness and commitment to delivering quality work. He is an asset to any team he works with.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:var(--accent2);">SF</div>
+        <div>
+          <div class="author-name">Sonia Fahim</div>
+          <div class="author-role">TM Contract Management · Achieving Together · Nov 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card fade-in">
+      <div class="stars">★★★★★</div>
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">Pranjal has gone above and beyond the requirements for a recent dashboard I required. I needed a "project on a page" dashboard for internal and external team reviews and I provided feedback on my requirements. Pranjal has taken it to another level — made the dashboard more user‑friendly and improved the layout. He exceeded my expectations and I am looking forward to his continued improvements to our dashboards.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:var(--gold);color:#333;">BE</div>
+        <div>
+          <div class="author-name">Beatrice</div>
+          <div class="author-role">Customer Centric · Feb 2025</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left fade-in">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Let's Build<br><em>Something</em><br>Remarkable</h2>
+    <p>Let's collaborate, learn from each other, and make our workplace — a best place to work.</p>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">✉</div>
+        7f7@sydneywater.com.au
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        Sydney, NSW
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🎯</div>
+        Currently looking for Strategic roles
+      </div>
+    </div>
+  </div>
+  <div class="contact-form fade-in">
+    <div class="form-row">
+      <div class="form-field">
+        <label>First Name</label>
+        <input type="text" placeholder="John"/>
+      </div>
+      <div class="form-field">
+        <label>Last Name</label>
+        <input type="text" placeholder="Smith"/>
+      </div>
+    </div>
+    <div class="form-field">
+      <label>Your Email</label>
+      <input type="email" placeholder="john@company.com"/>
+    </div>
+    <div class="form-field">
+      <label>Topic</label>
+      <select>
+        <option value="">Select a topic...</option>
+        <option>Data Analytics Collaboration</option>
+        <option>Power BI / Reporting Consultation</option>
+        <option>Strategic Role Enquiry</option>
+        <option>AI &amp; Advanced Analytics</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>Your Message</label>
+      <textarea placeholder="Tell me about your project, idea, or opportunity..."></textarea>
+    </div>
+    <a href="sip:7f7@sydneywater.com.au" class="form-submit" style="text-decoration:none;">
+      Send Message <span>→</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Pranjal Choudhury · Sydney Water Corporation · All rights reserved</p>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/pranjalch/" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const projects = {
+  p1: {
+    title: "Major Projects Panel Contracts Reporting — Sydney Water",
+    period: "Dec 2024 – Present",
+    challenge: "Panel contract performance and compliance insights were fragmented across SAP Ariba, SAP BW reports, and project systems, forcing manual reconciliation and limiting timely visibility for the Major Projects Commercial team.",
+    outcome: "Delivered a governed, end‑to‑end data model and Power BI reporting layer that provides on‑demand visibility into contractual compliance and utilisation across panel suppliers and projects — enabling faster decision‑making and stronger governance.",
+    tech: ["SAP Ariba","SAP BW (SCM)","EDP (Databricks)","SQL","Curated Views","Standardised Dataflows","Power BI"]
+  },
+  p2: {
+    title: "EPCM KRA Scorecard Automation — Upper South Creek Program (USCN)",
+    period: "2024 – Present",
+    challenge: "The EPCM scorecard process relied on manual spreadsheets, inconsistent KPI submissions, and repetitive recalculations. This caused reporting delays, discrepancies in KRA scoring, and limited transparency across program leadership.",
+    outcome: "Delivered a fully automated, workflow‑driven reporting framework using Power BI, Power Automate and Dataflows, enabling timely and reliable EPCM KRA performance reporting with zero manual compilation. Month‑end reporting consistency and accuracy improved significantly.",
+    tech: ["Power BI","Power Automate","Dataflows","DAX","SharePoint Online"]
+  },
+  p3: {
+    title: "Panel Contracts Performance Automation (60 Contracts, 250+ Suppliers)",
+    period: "2024 – Present",
+    challenge: "Panel contract reporting was manually compiled from multiple SAP systems, resulting in time-consuming manual analysis. Inconsistent data sources and limited historical visibility reduced confidence in contract governance decisions.",
+    outcome: "Delivered an automated analytics ecosystem that eliminated 2,500+ hours of manual effort annually, standardised cross‑unit reporting, and enabled data‑driven supplier performance monitoring.",
+    tech: ["EDP (Databricks)","SAP BW/BICC","SAP Ariba","Power BI","DAX","Dataflows"]
+  },
+  p4: {
+    title: "Procurement Analytics Data Governance Framework",
+    period: "2024 – Present",
+    challenge: "With 50+ PBIX files across procurement, inconsistent modelling practices led to unused fields, model bloat, refresh failures, and difficulty maintaining semantic layer integrity across teams.",
+    outcome: "Developed Data catalogue tool using Dataflows. Reduced unused columns by 60%, improved model performance, and achieved zero downtime from missing or deprecated fields. Introduced DevOps‑grade governance into reporting workflows with structured peer review.",
+    tech: ["Azure DevOps","Power BI","PowerShell","PBIR Metadata","Dataflows","Microsoft Visio"]
+  },
+  p5: {
+    title: "SAP Dataset Enablement & Modelling Alignment (EDP + Signavio)",
+    period: "2024 – Present",
+    challenge: "Critical SAP datasets were slow to reach EDP due to unclear modelling rules, reliance on SAP Citrix broken BW reports, and inconsistent interpretation of SAP business logic.",
+    outcome: "Achieved faster dataset availability in EDP, eliminated dependency on SAP Citrix BW reports, and delivered zero dataflow/refresh failures across downstream Power BI reporting.",
+    tech: ["SAP BW","SAP Signavio","EDP (Databricks)","Power BI","Data Modelling Workshops"]
+  },
+  p6: {
+    title: "Deviation from Standards Workflow — Shared Purchasing Contracts",
+    period: "2024 – Present (Yellow Belt Lean Six Sigma – in progress)",
+    challenge: "Deviation approval requests were handled manually via email, leading to delays, inconsistent tracking, and lack of auditability. Decision turnaround times exceeded 24 days.",
+    outcome: "Delivered a governed, trackable workflow that reduced approval turnaround time from 24 days to 15 days, improving transparency and collaboration across internal teams and RDP partners.",
+    tech: ["Power Apps","SharePoint Online","Power Automate","Microsoft Office 365"]
+  },
+  p7: {
+    title: "Power BI UX Standardisation & Adoption Improvement",
+    period: "2024 – Present",
+    challenge: "Procurement dashboards differed in layout, theme, usability, and performance, leading to inconsistent user experience and low adoption across teams.",
+    outcome: "Improved Power BI adoption and monthly views by simplifying UX, enforcing consistent branding, and delivering insights on user behaviour through automated usage tracking.",
+    tech: ["Power BI","JSON Themes","Power Automate","NPS Survey Framework","Microsoft Forms"]
+  },
+  p8: {
+    title: "AI‑Powered Narrative Generation for KPI Summary",
+    period: "2024 – Present",
+    challenge: "Leaders struggled to quickly interpret KPI movements and relied on analysts for narrative interpretation, slowing down decision cycles.",
+    outcome: "Delivered an automated narrative engine that accelerates insight consumption, reduces analyst workload, and provides structured, real‑time commentary for meetings and decision forums.",
+    tech: ["Power BI","Power Automate","AI Hub","Microsoft Teams","AI Model"]
+  },
+  p9: {
+    title: "ATO & GIPA Data Integration (Copilot‑Assisted Ingestion)",
+    period: "2024 – Present",
+    challenge: "External datasets required manual extraction and lacked automated refresh paths, limiting end‑to‑end procurement analytics coverage.",
+    outcome: "Delivered automated pipelines that expand procurement analytics capability, avoiding external dependencies, improving supplier intelligence, and providing daily‑refreshable external datasets for strategic decision‑making.",
+    tech: ["Power BI","Dataflows","Copilot","ATO Data","SWC GIPA Contracts Data","ETL/SQL"]
+  }
+};
+
+function openModal(id) {
+  const p = projects[id];
+  if (!p) return;
+  document.getElementById('modalContent').innerHTML = `
+    <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem">${p.period}</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;margin-bottom:1.5rem;line-height:1.2">${p.title}</h2>
+    <div style="border-left:2px solid var(--accent);padding-left:1rem;margin-bottom:1.5rem">
+      <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem">The Challenge</div>
+      <p style="color:var(--muted);font-size:0.78rem;line-height:1.8">${p.challenge}</p>
+    </div>
+    <div style="border-left:2px solid var(--accent2);padding-left:1rem;margin-bottom:1.5rem">
+      <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.4rem">The Outcome</div>
+      <p style="color:var(--muted);font-size:0.78rem;line-height:1.8">${p.outcome}</p>
+    </div>
+    <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem">Technology Stack</div>
+    <div class="modal-tech">${p.tech.map(t=>`<span class="tech-pill">${t}</span>`).join('')}</div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) { if (e.target===document.getElementById('modalOverlay')) closeModalBtn(); }
+function closeModalBtn() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+function filterProjects(cat, btn) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.style.display = (cat==='all' || card.dataset.category===cat) ? '' : 'none';
+  });
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeModalBtn(); });
+</script>
+</body>
+</html>
